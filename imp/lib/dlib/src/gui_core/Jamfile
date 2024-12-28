@@ -1,0 +1,27 @@
+# ----------------------------------------------------------------------
+#   Project    : Harman Car Multimedia System
+#   (c) copyright 2009
+#   Harman/becker Automotive Systems GmbH
+#   All rights reserved
+#
+#   File: Jamfile
+#   Author: MFiedler
+#   Date: 28/05/2009
+#
+# ----------------------------------------------------------------------
+
+SubDir IMP_NAV_ENGINE_PF_LIB_DLIB_SRC_GUICORE ;
+
+HBLibrary gui_core :
+   gui_core_kernel_1.cpp 
+   gui_core_kernel_2.cpp 
+   ;
+
+HBAdditionalFiles gui_core :
+   gui_core_kernel_1.h 
+   gui_core_kernel_2.h 
+   gui_core_kernel_abstract.h 
+   windows.h 
+   xlib.h 
+   ;
+

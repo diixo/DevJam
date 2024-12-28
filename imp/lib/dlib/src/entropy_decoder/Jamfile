@@ -1,0 +1,26 @@
+# ----------------------------------------------------------------------
+#   Project    : Harman Car Multimedia System
+#   (c) copyright 2009
+#   Harman/becker Automotive Systems GmbH
+#   All rights reserved
+#
+#   File: Jamfile
+#   Author: MFiedler
+#   Date: 28/05/2009
+#
+# ----------------------------------------------------------------------
+
+SubDir IMP_NAV_ENGINE_PF_LIB_DLIB_SRC_ENTROPY_DECODER ;
+
+HBLibrary entropy_decoder :
+   entropy_decoder_kernel_1.cpp 
+   entropy_decoder_kernel_2.cpp 
+   ;
+
+HBAdditionalFiles entropy_decoder :
+   entropy_decoder_kernel_1.h 
+   entropy_decoder_kernel_2.h 
+   entropy_decoder_kernel_abstract.h 
+   entropy_decoder_kernel_c.h 
+   ;
+

@@ -1,0 +1,26 @@
+# ----------------------------------------------------------------------
+#   Project    : Harman Car Multimedia System
+#   (c) copyright 2009
+#   Harman/becker Automotive Systems GmbH
+#   All rights reserved
+#
+#   File: Jamfile
+#   Author: MFiedler
+#   Date: 28/05/2009
+#
+# ----------------------------------------------------------------------
+
+
+SubDir IMP_NAV_ENGINE_PF_LIB_DLIB_SRC geometry ;
+
+HBAdditionalFiles dlib :
+   border_enumerator.h  
+   border_enumerator_abstract.h 
+   point_transforms.h 
+   point_transforms_abstract.h 
+   rectangle.h 
+   rectangle_abstract.h 
+   vector.h 
+   vector_abstract.h 
+   ;
+

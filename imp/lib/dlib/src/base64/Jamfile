@@ -1,0 +1,23 @@
+# ----------------------------------------------------------------------
+#   Project    : Harman Car Multimedia System
+#   (c) copyright 2009
+#   Harman/becker Automotive Systems GmbH
+#   All rights reserved
+#
+#   File: Jamfile
+#   Author: MFiedler
+#   Date: 28/05/2009
+#
+# ----------------------------------------------------------------------
+
+SubDir IMP_NAV_ENGINE_PF_LIB_DLIB_SRC_BASE64 ;
+
+HBLibrary base64 :
+   base64_kernel_1.cpp   
+   ;
+
+HBAdditionalFiles base64 :
+   base64_kernel_1.h 
+   base64_kernel_abstract.h 
+   ;
+

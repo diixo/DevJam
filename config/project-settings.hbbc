@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<build-configuration version="1.0.0">
+  <base-session>
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-generate" value="true" inherited="false"/>
+      <property name="build.build-other-targets" value="true" inherited="false"/>
+      <property name="build.use-other-targets" value="targetbin" inherited="false"/>
+      <property name="build.workspace-type" value="VS8" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.LintModel" version="2.0.0">
+      <property name="lint.report-errors" value="false" inherited="false"/>
+      <property name="lint.report-options" value="-R ReportMeta -reportLintIssueSet HB_PRIO_1:HB_PRIO_2 -o report/LintReport.txt -fPSPath PRODUCTS_DIR -fPSPath PROJECT_DIR\deliveries\packages" inherited="false"/>
+      <property name="lint.report-sort-type" value="byModule" inherited="false"/>
+      <property name="lint.report-type" value="both" inherited="false"/>
+      <property name="lint.report-warnings" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.MiscOptionsModel" version="1.2.0">
+      <property name="misc.enable-deprecated-features" value="true" inherited="false"/>
+      <property name="misc.enable-experimental-features" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.PathModel" version="7.2.0">
+      <property name="path.elina-1-sdk-dir" value="./deliveries/orinoco/SDK1/sysroots/cortexa9hf-vfp-neon-elina-linux-gnueabi" inherited="true"/>
+      <property name="path.java-dir" value="C:\Program Files\Java\jre1.6.0" inherited="false"/>
+      <property name="path.linaro-dir" value=".\deliveries\ELINA\linux" inherited="true"/>
+      <property name="path.perl-dir" value="C:\Perl" inherited="false"/>
+      <property name="path.qnx-650-dir" value=".\deliveries\QNX650\qnx" inherited="false"/>
+      <property name="path.qnx-650sp1-dir" value=".\deliveries\QNX650SP1\qnx" inherited="false"/>
+      <property name="path.qt-dir" value="deliveries\qt" inherited="false"/>
+      <property name="path.vs-8-dir" value="C:\Program Files\Microsoft Visual Studio 8" inherited="false"/>
+      <property name="path.vs-platform-sdk-dir" value="C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2" inherited="false"/>
+      <property name="path.yocto-adt-dir" value="./deliveries/orinoco/SDK1/sysroots" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.custom-jam-variables" value="HB_JAM_WORKSPACES_USE_NEW_WORKINGDIR_LOGIC = TRUE ; # workaround until a major buildprocess release has been done which contains http://trac.harmanbecker.com:9000/BuildTools/ticket/1067&#13;&#10;&#13;&#10;if $(IDE) in MOMENTICS_6_5_0 MOMENTICS_6_5_0_SP1&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # Use STL&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   if $(GCC_VERSION) != 4_4_2&#13;&#10;   {&#13;&#10;      Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown GCC_VERSION&quot; ;&#13;&#10;   }&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   case X86   : HB_CPU_OPTIONS = -V4.4.2,gcc_ntox86_cpp-ne ;&#13;&#10;   case ARMv7 : HB_CPU_OPTIONS = -V4.4.2,gcc_ntoarmv7le_cpp-ne ;&#13;&#10;   case *     : Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown HARDWARE&quot; ;&#13;&#10;   }&#13;&#10;&#13;&#10;   LINKLIBS             = cpp-ne ;&#13;&#10;   IMPLICIT_C++_DEFINES = _CPP _NO_EX __cplusplus __GNUG__=4 __NO_INLINE__ __DEPRECATED ;&#13;&#10;&#13;&#10;   if $(IDE) = MOMENTICS_6_5_0_SP1&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;   else if $(IDE) = MOMENTICS_6_5_0&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # QNX 6.3.0 dropped some warnings from -w9. As we want to see them, we re-enable them here.&#13;&#10;   # See http://trac.harmanbecker.com:9000/BuildTools/ticket/1019&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   HB_C++_WARNING_FLAGS = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Wno-non-template-friend -Werror ; # -Wshadow&#13;&#10;   HB_CC_WARNING_FLAGS  = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Werror ; # -Wshadow&#13;&#10;}&#13;&#10;else if $(IDE) in VS8 VS9 VS10&#13;&#10;{&#13;&#10;   if $(HB_OPTIMIZE) != NO_OPT&#13;&#10;   {&#13;&#10;      DEBUGFLAG = /Z7 /MTd ; # remove default option /RTC1&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = LINUX_3_1_0&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = TRUE ; # link FW dynamic&#13;&#10;   # if necessary, put LINUX specific adjustments for default settings here&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   &#9;case X86  :   HB_CC_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;case ARM  :   HB_WCC_SYSROOT   = [ FDirName / bmw117 sysroot mm_entrynavc2hw-glibc_ivi_base sysroot ] ;&#13;&#10;   &#9;&#9;&#9;HB_CC_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = LINARO_2013_03&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;   C++FLAGS += -fpermissive ;&#13;&#10;}&#13;&#10;else if $(IDE) in YOCTO_ADT TEGRA&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;   C++FLAGS += -fpermissive ;&#13;&#10;}&#13;&#10;else&#13;&#10;{&#13;&#10;   Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown IDE:&quot; $(IDE) ;&#13;&#10;}" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.WarningModel" version="1.0.0">
+      <property name="warning.report-build-warnings" value="true" inherited="false"/>
+      <property name="warning.report-type" value="overview" inherited="false"/>
+    </model>
+  </base-session>
+  <session name="------ configurations mandatory for checkin (WIN32 + QNX6.5): -------------------------------------------------------------------------------------------------------------------------------">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="false" inherited="false"/>
+      <property name="build.build-workspace" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.DocumentationModel" version="3.0.0">
+      <property name="doc.build-documentation" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TestModel" version="1.0.0">
+      <property name="test.build-test" value="false" inherited="false"/>
+    </model>
+  </session>
+  <session name="x86-w32-vs8-nop-trc-dbg-rtti">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-generate" value="false" inherited="true"/>
+      <property name="build.build-other-targets" value="true" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.enable-debug-info" value="true" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="false" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.hardware" value="X86" inherited="false"/>
+      <property name="target.ide-type" value="VS" inherited="false"/>
+      <property name="target.ide-version" value="8" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="No opt" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Win32" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+    </model>
+  </session>
+  <session name="armv7-qnx-m650sp1-4.4.2-osz-trc-rel-rtti-cpp">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.MiscOptionsModel" version="1.2.0">
+      <property name="misc.verbosity-level" value="true" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-products-sub-dir" value="armv7-qnx-m650sp1-4.4.2-osz-trc-rel-rtti-cpp" inherited="true"/>
+      <property name="target.enable-debug-info" value="false" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="true" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.gcc-version" value="442" inherited="false"/>
+      <property name="target.hardware" value="ARMv7" inherited="false"/>
+      <property name="target.ide-type" value="MOMENTICS" inherited="false"/>
+      <property name="target.ide-version" value="650sp1" inherited="false"/>
+      <property name="target.linklib-cpp" value="cpp" inherited="false"/>
+      <property name="target.optimizer-type" value="Opt for size" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.root-products-dir" value="" inherited="true"/>
+      <property name="target.target-os" value="QNX Neutrino" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="false" inherited="true"/>
+      <property name="target.use-variant" value="false" inherited="true"/>
+      <property name="target.variant-name" value="OmapQnx" inherited="true"/>
+    </model>
+  </session>
+  <session name="------ other QNX configurations: ---------------------------------------------------------------------------------------------------------------------------------------------">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="false" inherited="false"/>
+      <property name="build.build-workspace" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.DocumentationModel" version="3.0.0">
+      <property name="doc.build-documentation" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TestModel" version="1.0.0">
+      <property name="test.build-test" value="false" inherited="false"/>
+    </model>
+  </session>
+  <session name="x86-qnx-m650sp1-4.4.2-osz-trc-rel-rtti-cpp">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-generate" value="false" inherited="true"/>
+      <property name="build.build-other-targets" value="true" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.enable-debug-info" value="false" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="true" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.gcc-version" value="442" inherited="false"/>
+      <property name="target.hardware" value="X86" inherited="false"/>
+      <property name="target.ide-type" value="MOMENTICS" inherited="false"/>
+      <property name="target.ide-version" value="650sp1" inherited="false"/>
+      <property name="target.linklib-cpp" value="cpp" inherited="false"/>
+      <property name="target.optimizer-type" value="Opt for size" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+    </model>
+  </session>
+  <session name="------ other WIN32 configurations: ---------------------------------------------------------------------------------------------------------------------------------------------">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="false" inherited="false"/>
+      <property name="build.build-workspace" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.DocumentationModel" version="3.0.0">
+      <property name="doc.build-documentation" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TestModel" version="1.0.0">
+      <property name="test.build-test" value="false" inherited="false"/>
+    </model>
+  </session>
+  <session name="x86-w32-vs8-nop-trc-dbg-qtfy-rtti">
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.enable-debug-info" value="true" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="false" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.hardware" value="X86" inherited="false"/>
+      <property name="target.ide-type" value="VS" inherited="false"/>
+      <property name="target.ide-version" value="8" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="No opt" inherited="false"/>
+      <property name="target.profiling-type" value="quantify" inherited="false"/>
+      <property name="target.target-os" value="Win32" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+    </model>
+  </session>
+  <session name="x86-w32-vs8-nop-trc-rel-rtti">
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.enable-debug-info" value="false" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="false" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.hardware" value="X86" inherited="false"/>
+      <property name="target.ide-type" value="VS" inherited="false"/>
+      <property name="target.ide-version" value="8" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="No opt" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Win32" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+    </model>
+  </session>
+  <session name="wo_Someip_ x86-w32-vs8-nop-trc-dbg-rtti">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-generate" value="false" inherited="true"/>
+      <property name="build.build-other-targets" value="true" inherited="true"/>
+      <property name="build.use-other-targets" value="-sHB_JAM_DEBUG=TRUE targetbin" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-jam-variables" value="HB_JAM_WORKSPACES_USE_NEW_WORKINGDIR_LOGIC = TRUE ; # workaround until a major buildprocess release has been done which contains http://trac.harmanbecker.com:9000/BuildTools/ticket/1067&#13;&#10;&#13;&#10;SOMEIP_AVAILABLE = FALSE ;&#13;&#10;&#13;&#10;if $(IDE) in MOMENTICS_6_5_0 MOMENTICS_6_5_0_SP1&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # Use STL&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   if $(GCC_VERSION) != 4_4_2&#13;&#10;   {&#13;&#10;      Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown GCC_VERSION&quot; ;&#13;&#10;   }&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   case X86   : HB_CPU_OPTIONS = -V4.4.2,gcc_ntox86_cpp-ne ;&#13;&#10;   case ARMv7 : HB_CPU_OPTIONS = -V4.4.2,gcc_ntoarmv7le_cpp-ne ;&#13;&#10;   case *     : Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown HARDWARE&quot; ;&#13;&#10;   }&#13;&#10;&#13;&#10;   LINKLIBS             = cpp-ne ;&#13;&#10;   IMPLICIT_C++_DEFINES = _CPP _NO_EX __cplusplus __GNUG__=4 __NO_INLINE__ __DEPRECATED ;&#13;&#10;&#13;&#10;   if $(IDE) = MOMENTICS_6_5_0_SP1&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;   else if $(IDE) = MOMENTICS_6_5_0&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # QNX 6.3.0 dropped some warnings from -w9. As we want to see them, we re-enable them here.&#13;&#10;   # See http://trac.harmanbecker.com:9000/BuildTools/ticket/1019&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   HB_C++_WARNING_FLAGS = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Wno-non-template-friend -Werror ; # -Wshadow&#13;&#10;   HB_CC_WARNING_FLAGS  = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Werror ; # -Wshadow&#13;&#10;}&#13;&#10;else if $(IDE) in VS8 VS9 VS10&#13;&#10;{&#13;&#10;   if $(HB_OPTIMIZE) != NO_OPT&#13;&#10;   {&#13;&#10;      DEBUGFLAG = /Z7 /MTd ; # remove default option /RTC1&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = LINUX_3_1_0&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = TRUE ; # link FW dynamic&#13;&#10;   # if necessary, put LINUX specific adjustments for default settings here&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   &#9;case X86  :   HB_CC_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;case ARM  :   HB_WCC_SYSROOT   = [ FDirName / bmw117 sysroot mm_entrynavc2hw-glibc_ivi_base sysroot ] ;&#13;&#10;   &#9;&#9;&#9;HB_CC_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = LINARO_2013_03&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;   C++FLAGS += -fpermissive ;&#13;&#10;}&#13;&#10;else if $(IDE) = YOCTO_ADT&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;   C++FLAGS += -fpermissive ;&#13;&#10;}&#13;&#10;else&#13;&#10;{&#13;&#10;   Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown IDE:&quot; $(IDE) ;&#13;&#10;}" inherited="false"/>
+      <property name="target.custom-products-sub-dir" value="x86-w32-vs8-nop-trc-rel-rtti_wo_someip" inherited="false"/>
+      <property name="target.enable-debug-info" value="false" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="false" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.hardware" value="X86" inherited="false"/>
+      <property name="target.ide-type" value="VS" inherited="false"/>
+      <property name="target.ide-version" value="8" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="No opt" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Win32" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="false"/>
+    </model>
+  </session>
+  <session name="------ documentation: ------------------------------------------------------------------------------------------------------------------------------------">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="false" inherited="false"/>
+      <property name="build.build-workspace" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.DocumentationModel" version="3.0.0">
+      <property name="doc.build-documentation" value="false" inherited="false"/>
+    </model>
+  </session>
+  <session name="documentation (all)">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="true" inherited="false"/>
+      <property name="build.use-other-targets" value="documentation.asciidoc" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.DocumentationModel" version="3.0.0">
+      <property name="doc.build-documentation" value="true" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-jam-variables" value="# don&apos;t run LINT in test folders (these errors will not be tracked)&#13;&#10;BUILD_TESTS = FALSE ;&#13;&#10;&#13;&#10;HB_JAM_WORKSPACES_USE_NEW_WORKINGDIR_LOGIC = TRUE ; # workaround until a major buildprocess release has been done which contains http://trac.harmanbecker.com:9000/BuildTools/ticket/1067&#13;&#10;&#13;&#10;if $(IDE) in MOMENTICS_6_5_0 MOMENTICS_6_5_0_SP1&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # Use STL&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   if $(GCC_VERSION) != 4_4_2&#13;&#10;   {&#13;&#10;      Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown GCC_VERSION&quot; ;&#13;&#10;   }&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   case X86   : HB_CPU_OPTIONS = -V4.4.2,gcc_ntox86_cpp-ne ;&#13;&#10;   case ARMv7 : HB_CPU_OPTIONS = -V4.4.2,gcc_ntoarmv7le_cpp-ne ;&#13;&#10;   case *     : Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown HARDWARE&quot; ;&#13;&#10;   }&#13;&#10;&#13;&#10;   LINKLIBS             = cpp-ne ;&#13;&#10;   IMPLICIT_C++_DEFINES = _CPP _NO_EX __cplusplus __GNUG__=4 __NO_INLINE__ __DEPRECATED ;&#13;&#10;&#13;&#10;   if $(IDE) = MOMENTICS_6_5_0_SP1&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;   else if $(IDE) = MOMENTICS_6_5_0&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # QNX 6.3.0 dropped some warnings from -w9. As we want to see them, we re-enable them here.&#13;&#10;   # See http://trac.harmanbecker.com:9000/BuildTools/ticket/1019&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   HB_C++_WARNING_FLAGS = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Wno-non-template-friend -Werror ; # -Wshadow&#13;&#10;   HB_CC_WARNING_FLAGS  = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Werror ; # -Wshadow&#13;&#10;}&#13;&#10;else if $(IDE) in VS8 VS9 VS10&#13;&#10;{&#13;&#10;   if $(HB_OPTIMIZE) != NO_OPT&#13;&#10;   {&#13;&#10;      DEBUGFLAG = /Z7 /MTd ; # remove default option /RTC1&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = LINUX_3_1_0&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = TRUE ; # link FW dynamic&#13;&#10;   # if necessary, put LINUX specific adjustments for default settings here&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   &#9;case X86  :   HB_CC_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;case ARM  :   HB_WCC_SYSROOT   = [ FDirName / bmw117 sysroot mm_entrynavc2hw-glibc_ivi_base sysroot ] ;&#13;&#10;   &#9;&#9;&#9;HB_CC_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   }&#13;&#10;}&#13;&#10;else&#13;&#10;{&#13;&#10;   Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown IDE:&quot; $(IDE) ;&#13;&#10;}" inherited="false"/>
+      <property name="target.custom-products-sub-dir" value="documentation" inherited="false"/>
+      <property name="target.enable-debug-info" value="true" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="false" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.hardware" value="X86" inherited="false"/>
+      <property name="target.ide-type" value="VS" inherited="false"/>
+      <property name="target.ide-version" value="8" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="No opt" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Win32" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="false"/>
+      <property name="target.use-variant" value="false" inherited="true"/>
+    </model>
+  </session>
+  <session name="documentation (docbook)">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="false" inherited="false"/>
+      <property name="build.use-other-targets" value="" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.DocumentationModel" version="3.0.0">
+      <property name="doc.build-docbook" value="true" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-products-sub-dir" value="documentation" inherited="false"/>
+      <property name="target.enable-debug-info" value="true" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="false" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.hardware" value="X86" inherited="false"/>
+      <property name="target.ide-type" value="VS" inherited="false"/>
+      <property name="target.ide-version" value="8" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="No opt" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Win32" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="false"/>
+    </model>
+  </session>
+  <session name="documentation (doxygen)">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="false" inherited="false"/>
+      <property name="build.use-other-targets" value="" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.DocumentationModel" version="3.0.0">
+      <property name="doc.build-doxygen" value="true" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-products-sub-dir" value="documentation" inherited="false"/>
+      <property name="target.enable-debug-info" value="true" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="false" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.hardware" value="X86" inherited="false"/>
+      <property name="target.ide-type" value="VS" inherited="false"/>
+      <property name="target.ide-version" value="8" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="No opt" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Win32" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="false"/>
+    </model>
+  </session>
+  <session name="------ Quality builds: ---------------------------------------------------------------------------------------------------">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="false" inherited="false"/>
+      <property name="build.build-workspace" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.DocumentationModel" version="3.0.0">
+      <property name="doc.build-documentation" value="false" inherited="false"/>
+    </model>
+  </session>
+  <session name="Lint-build-armv7-qnx-m650sp1">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="false" inherited="false"/>
+      <property name="build.use-other-targets" value="" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.LintModel" version="2.0.0">
+      <property name="lint.build-cleanlint" value="false" inherited="true"/>
+      <property name="lint.build-lint" value="true" inherited="false"/>
+      <property name="lint.report-errors" value="true" inherited="false"/>
+      <property name="lint.report-lint-issues" value="true" inherited="false"/>
+      <property name="lint.report-options" value="-R ReportMeta -reportLintIssueSet HB_PRIO_1:HB_PRIO_2:HB_PRIO_3 -o report/LintReport.txt -fPSPath PRODUCTS_DIR -fPSPath PROJECT_DIR\deliveries\packages" inherited="false"/>
+      <property name="lint.report-sort-type" value="byModule" inherited="false"/>
+      <property name="lint.report-type" value="both" inherited="false"/>
+      <property name="lint.report-warnings" value="false" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.LoCModel" version="1.0.0">
+      <property name="loc.build-loc" value="true" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.PathModel" version="7.2.0">
+      <property name="path.perl-dir" value="D:\perl" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-jam-variables" value="# don&apos;t run LINT in test and DevQ folders (these errors will not be tracked)&#13;&#10;BUILD_TESTS = FALSE ;&#13;&#10;BUILD_DEVQ  = FALSE ;&#13;&#10;&#13;&#10;HB_JAM_WORKSPACES_USE_NEW_WORKINGDIR_LOGIC = TRUE ; # workaround until a major buildprocess release has been done which contains http://trac.harmanbecker.com:9000/BuildTools/ticket/1067&#13;&#10;&#13;&#10;if $(IDE) in MOMENTICS_6_5_0 MOMENTICS_6_5_0_SP1&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # Use STL&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   if $(GCC_VERSION) != 4_4_2&#13;&#10;   {&#13;&#10;      Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown GCC_VERSION&quot; ;&#13;&#10;   }&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   case X86   : HB_CPU_OPTIONS = -V4.4.2,gcc_ntox86_cpp-ne ;&#13;&#10;   case ARMv7 : HB_CPU_OPTIONS = -V4.4.2,gcc_ntoarmv7le_cpp-ne ;&#13;&#10;   case *     : Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown HARDWARE&quot; ;&#13;&#10;   }&#13;&#10;&#13;&#10;   LINKLIBS             = cpp-ne ;&#13;&#10;   IMPLICIT_C++_DEFINES = _CPP _NO_EX __cplusplus __GNUG__=4 __NO_INLINE__ __DEPRECATED ;&#13;&#10;&#13;&#10;   if $(IDE) = MOMENTICS_6_5_0_SP1&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;   else if $(IDE) = MOMENTICS_6_5_0&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # QNX 6.3.0 dropped some warnings from -w9. As we want to see them, we re-enable them here.&#13;&#10;   # See http://trac.harmanbecker.com:9000/BuildTools/ticket/1019&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   HB_C++_WARNING_FLAGS = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Wno-non-template-friend -Werror ; # -Wshadow&#13;&#10;   HB_CC_WARNING_FLAGS  = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Werror ; # -Wshadow&#13;&#10;}&#13;&#10;else if $(IDE) in VS8 VS9 VS10&#13;&#10;{&#13;&#10;   if $(HB_OPTIMIZE) != NO_OPT&#13;&#10;   {&#13;&#10;      DEBUGFLAG = /Z7 /MTd ; # remove default option /RTC1&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = LINUX_3_1_0&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = TRUE ; # link FW dynamic&#13;&#10;   # if necessary, put LINUX specific adjustments for default settings here&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   &#9;case X86  :   HB_CC_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;case ARM  :   HB_WCC_SYSROOT   = [ FDirName / bmw117 sysroot mm_entrynavc2hw-glibc_ivi_base sysroot ] ;&#13;&#10;   &#9;&#9;&#9;HB_CC_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   }&#13;&#10;}&#13;&#10;else&#13;&#10;{&#13;&#10;   Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown IDE:&quot; $(IDE) ;&#13;&#10;}" inherited="false"/>
+      <property name="target.custom-products-sub-dir" value="Lint-build-armv7-qnx-m650sp1" inherited="false"/>
+      <property name="target.enable-debug-info" value="false" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="true" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.gcc-version" value="442" inherited="false"/>
+      <property name="target.hardware" value="ARMv7" inherited="false"/>
+      <property name="target.ide-type" value="MOMENTICS" inherited="false"/>
+      <property name="target.ide-version" value="650sp1" inherited="false"/>
+      <property name="target.linklib-cpp" value="cpp" inherited="false"/>
+      <property name="target.optimizer-type" value="Opt for size" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.WarningModel" version="1.0.0">
+      <property name="warning.report-build-warnings" value="true" inherited="false"/>
+      <property name="warning.report-type" value="both" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.plugins.linthtml.LintHtmlModel" version="0.1.1">
+      <property name="lint.report-html.loc-csv-report-activated" value="true" inherited="false"/>
+      <property name="lint.report-html.report-activated" value="true" inherited="false"/>
+      <property name="lint.report-html.report-build-id" value="Nav2010" inherited="false"/>
+      <property name="lint.report-html.report-ini-file" value="config/LintResponsibles.ini" inherited="false"/>
+      <property name="lint.report-html.report-out-dir" value="report" inherited="false"/>
+      <property name="lint.report-html.report-project-name" value="Nav2010" inherited="false"/>
+      <property name="lint.report-html.report-project-variant" value="${target.products-sub-dir}" inherited="false"/>
+    </model>
+  </session>
+  <session name="Lint-build-armv7-qnx-m650sp1_HB_PRIO_1">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.LintModel" version="2.0.0">
+      <property name="lint.build-cleanlint" value="false" inherited="true"/>
+      <property name="lint.build-lint" value="true" inherited="false"/>
+      <property name="lint.report-errors" value="true" inherited="false"/>
+      <property name="lint.report-lint-issues" value="true" inherited="false"/>
+      <property name="lint.report-options" value="-R ReportMeta -reportLintIssueSet HB_PRIO_1 -o report/LintReport.txt -fPSPath PRODUCTS_DIR -fPSPath PROJECT_DIR\deliveries\packages" inherited="false"/>
+      <property name="lint.report-sort-type" value="byModule" inherited="false"/>
+      <property name="lint.report-type" value="both" inherited="false"/>
+      <property name="lint.report-warnings" value="false" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.LoCModel" version="1.0.0">
+      <property name="loc.build-loc" value="true" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-jam-variables" value="# don&apos;t run LINT in test and DevQ folders (these errors will not be tracked)&#13;&#10;BUILD_TESTS = FALSE ;&#13;&#10;BUILD_DEVQ  = FALSE ;&#13;&#10;&#13;&#10;HB_JAM_WORKSPACES_USE_NEW_WORKINGDIR_LOGIC = TRUE ; # workaround until a major buildprocess release has been done which contains http://trac.harmanbecker.com:9000/BuildTools/ticket/1067&#13;&#10;&#13;&#10;if $(IDE) in MOMENTICS_6_5_0 MOMENTICS_6_5_0_SP1&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # Use STL&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   if $(GCC_VERSION) != 4_4_2&#13;&#10;   {&#13;&#10;      Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown GCC_VERSION&quot; ;&#13;&#10;   }&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   case X86   : HB_CPU_OPTIONS = -V4.4.2,gcc_ntox86_cpp-ne ;&#13;&#10;   case ARMv7 : HB_CPU_OPTIONS = -V4.4.2,gcc_ntoarmv7le_cpp-ne ;&#13;&#10;   case *     : Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown HARDWARE&quot; ;&#13;&#10;   }&#13;&#10;&#13;&#10;   LINKLIBS             = cpp-ne ;&#13;&#10;   IMPLICIT_C++_DEFINES = _CPP _NO_EX __cplusplus __GNUG__=4 __NO_INLINE__ __DEPRECATED ;&#13;&#10;&#13;&#10;   if $(IDE) = MOMENTICS_6_5_0_SP1&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;   else if $(IDE) = MOMENTICS_6_5_0&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # QNX 6.3.0 dropped some warnings from -w9. As we want to see them, we re-enable them here.&#13;&#10;   # See http://trac.harmanbecker.com:9000/BuildTools/ticket/1019&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   HB_C++_WARNING_FLAGS = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Wno-non-template-friend -Werror ; # -Wshadow&#13;&#10;   HB_CC_WARNING_FLAGS  = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Werror ; # -Wshadow&#13;&#10;}&#13;&#10;else if $(IDE) in VS8 VS9 VS10&#13;&#10;{&#13;&#10;   if $(HB_OPTIMIZE) != NO_OPT&#13;&#10;   {&#13;&#10;      DEBUGFLAG = /Z7 /MTd ; # remove default option /RTC1&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = LINUX_3_1_0&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = TRUE ; # link FW dynamic&#13;&#10;   # if necessary, put LINUX specific adjustments for default settings here&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   &#9;case X86  :   HB_CC_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;case ARM  :   HB_WCC_SYSROOT   = [ FDirName / bmw117 sysroot mm_entrynavc2hw-glibc_ivi_base sysroot ] ;&#13;&#10;   &#9;&#9;&#9;HB_CC_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   }&#13;&#10;}&#13;&#10;else&#13;&#10;{&#13;&#10;   Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown IDE:&quot; $(IDE) ;&#13;&#10;}" inherited="false"/>
+      <property name="target.custom-products-sub-dir" value="Lint-build-armv7-qnx-m650sp1_HB_PRIO_1" inherited="false"/>
+      <property name="target.enable-debug-info" value="false" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="true" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.gcc-version" value="442" inherited="false"/>
+      <property name="target.hardware" value="ARMv7" inherited="false"/>
+      <property name="target.ide-type" value="MOMENTICS" inherited="false"/>
+      <property name="target.ide-version" value="650sp1" inherited="false"/>
+      <property name="target.linklib-cpp" value="cpp" inherited="false"/>
+      <property name="target.optimizer-type" value="Opt for size" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.WarningModel" version="1.0.0">
+      <property name="warning.report-build-warnings" value="true" inherited="false"/>
+      <property name="warning.report-type" value="both" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.plugins.linthtml.LintHtmlModel" version="0.1.1">
+      <property name="lint.report-html.loc-csv-report-activated" value="true" inherited="false"/>
+      <property name="lint.report-html.report-activated" value="true" inherited="false"/>
+      <property name="lint.report-html.report-build-id" value="Nav2010" inherited="false"/>
+      <property name="lint.report-html.report-ini-file" value="config/LintResponsibles.ini" inherited="false"/>
+      <property name="lint.report-html.report-out-dir" value="report" inherited="false"/>
+      <property name="lint.report-html.report-project-name" value="Nav2010" inherited="false"/>
+      <property name="lint.report-html.report-project-variant" value="${target.products-sub-dir}" inherited="false"/>
+    </model>
+  </session>
+  <session name="Run-tests-x86-w32">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-generate" value="false" inherited="true"/>
+      <property name="build.build-other-targets" value="true" inherited="true"/>
+      <property name="build.use-other-targets" value="test" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.enable-debug-info" value="true" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="false" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.hardware" value="X86" inherited="false"/>
+      <property name="target.ide-type" value="VS" inherited="false"/>
+      <property name="target.ide-version" value="8" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="No opt" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Win32" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TestModel" version="1.0.0">
+      <property name="test.build-test" value="true" inherited="false"/>
+    </model>
+  </session>
+  <session name="------ Test and Performance Builds: ---------------------------------------------------------------------------------------------------">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="false" inherited="false"/>
+      <property name="build.build-workspace" value="false" inherited="false"/>
+    </model>
+  </session>
+  <session name="Torte_continuous_x86-w32-vs8-nop-trc-dbg-rtti">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="true" inherited="false"/>
+      <property name="build.use-other-targets" value=" -sTEST_TORTE_ACTIVE=TRUE test.torte.continuous" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-products-sub-dir" value="" inherited="false"/>
+      <property name="target.enable-debug-info" value="true" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="false" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.hardware" value="X86" inherited="false"/>
+      <property name="target.ide-type" value="VS" inherited="false"/>
+      <property name="target.ide-version" value="8" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="No opt" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Win32" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="true"/>
+    </model>
+  </session>
+  <session name="Torte_nightly_x86-w32-vs8-nop-trc-dbg-rtti">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="true" inherited="false"/>
+      <property name="build.use-other-targets" value=" -sTEST_TORTE_ACTIVE=TRUE test.torte.nightly" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.enable-debug-info" value="true" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="false" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.hardware" value="X86" inherited="false"/>
+      <property name="target.ide-type" value="VS" inherited="false"/>
+      <property name="target.ide-version" value="8" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="No opt" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Win32" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+    </model>
+  </session>
+  <session name="Test_continuous_x86-w32-vs8-nop-trc-rel-rtti">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="true" inherited="false"/>
+      <property name="build.use-other-targets" value="targetbin test.imp_nav_engine_pf_nds" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-products-sub-dir" value="Test_continuous_x86-w32-rel" inherited="false"/>
+      <property name="target.enable-debug-info" value="true" inherited="true"/>
+      <property name="target.enable-mapfile-creation" value="false" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.hardware" value="X86" inherited="false"/>
+      <property name="target.ide-type" value="VS" inherited="false"/>
+      <property name="target.ide-version" value="8" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="No opt" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Win32" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="false"/>
+    </model>
+  </session>
+  <session name="=== PLEASE PUT TEST SESSIONS BELOW THIS MARKER: ---------------------------------------------------------------------------------------------------">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="false" inherited="false"/>
+      <property name="build.build-other-targets" value="false" inherited="false"/>
+      <property name="build.build-workspace" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.DocumentationModel" version="3.0.0">
+      <property name="doc.build-documentation" value="false" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TestModel" version="1.0.0">
+      <property name="test.build-test" value="false" inherited="false"/>
+    </model>
+  </session>
+  <session name="=== ELINA: ---------------------------------------------------------------------------------------------------">
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-products-sub-dir" value="armv7-qnx-m650-4.4.2-osz-trc-rel-rtti-cpp_static_nds_lib" inherited="false"/>
+      <property name="target.enable-debug-info" value="false" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="true" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.gcc-version" value="LNR 4.7.3" inherited="false"/>
+      <property name="target.hardware" value="ARMv7" inherited="false"/>
+      <property name="target.ide-type" value="LINARO" inherited="false"/>
+      <property name="target.ide-version" value="2013.03" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="Opt for size" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Linux" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="false"/>
+    </model>
+  </session>
+  <session name="armv7-linux-lnr4.7.3-osz-trc-rel-rtti">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.use-other-targets" value="NavigationBasic MapTestController" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.MiscOptionsModel" version="1.2.0">
+      <property name="misc.verbosity-level" value="true" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.PathModel" version="7.2.0">
+      <property name="path.elina-1-sdk-dir" value=".\deliveries\ELINA\linux\target\armv7\sysroot" inherited="false"/>
+      <property name="path.linaro-dir" value=".\deliveries\ELINA\linux" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-products-sub-dir" value="armv7-qnx-m650-4.4.2-osz-trc-rel-rtti-cpp_static_nds_lib" inherited="true"/>
+      <property name="target.enable-debug-info" value="false" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="true" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.gcc-version" value="LNR 4.7.3" inherited="false"/>
+      <property name="target.hardware" value="ARMv7" inherited="false"/>
+      <property name="target.ide-type" value="LINARO" inherited="false"/>
+      <property name="target.ide-version" value="2013.03" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="Opt for size" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Linux" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="true"/>
+    </model>
+  </session>
+  <session name="armv7-linux-lnr4.7.3-osp-trc-rel-rtti-vivante">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="true" inherited="false"/>
+      <property name="build.build-other-targets" value="true" inherited="false"/>
+      <property name="build.use-other-targets" value="NavigationBasic MapTestController" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.MiscOptionsModel" version="1.2.0">
+      <property name="misc.verbosity-level" value="true" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.PathModel" version="7.2.0">
+      <property name="path.elina-1-sdk-dir" value=".\deliveries\ELINA\linux\target\armv7\sysroot" inherited="false"/>
+      <property name="path.linaro-dir" value=".\deliveries\ELINA\linux" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-jam-variables" value="HB_JAM_WORKSPACES_USE_NEW_WORKINGDIR_LOGIC = TRUE ; # workaround until a major buildprocess release has been done which contains http://trac.harmanbecker.com:9000/BuildTools/ticket/1067&#13;&#10;&#13;&#10;if $(IDE) in MOMENTICS_6_5_0 MOMENTICS_6_5_0_SP1&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # Use STL&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   if $(GCC_VERSION) != 4_4_2&#13;&#10;   {&#13;&#10;      Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown GCC_VERSION&quot; ;&#13;&#10;   }&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   case X86   : HB_CPU_OPTIONS = -V4.4.2,gcc_ntox86_cpp-ne ;&#13;&#10;   case ARMv7 : HB_CPU_OPTIONS = -V4.4.2,gcc_ntoarmv7le_cpp-ne ;&#13;&#10;   case *     : Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown HARDWARE&quot; ;&#13;&#10;   }&#13;&#10;&#13;&#10;   LINKLIBS             = cpp-ne ;&#13;&#10;   IMPLICIT_C++_DEFINES = _CPP _NO_EX __cplusplus __GNUG__=4 __NO_INLINE__ __DEPRECATED ;&#13;&#10;&#13;&#10;   if $(IDE) = MOMENTICS_6_5_0_SP1&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;   else if $(IDE) = MOMENTICS_6_5_0&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # QNX 6.3.0 dropped some warnings from -w9. As we want to see them, we re-enable them here.&#13;&#10;   # See http://trac.harmanbecker.com:9000/BuildTools/ticket/1019&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   HB_C++_WARNING_FLAGS = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Wno-non-template-friend -Werror ; # -Wshadow&#13;&#10;   HB_CC_WARNING_FLAGS  = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Werror ; # -Wshadow&#13;&#10;}&#13;&#10;else if $(IDE) in VS8 VS9 VS10&#13;&#10;{&#13;&#10;   if $(HB_OPTIMIZE) != NO_OPT&#13;&#10;   {&#13;&#10;      DEBUGFLAG = /Z7 /MTd ; # remove default option /RTC1&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = LINUX_3_1_0&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = TRUE ; # link FW dynamic&#13;&#10;   # if necessary, put LINUX specific adjustments for default settings here&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   &#9;case X86  :   HB_CC_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;case ARM  :   HB_WCC_SYSROOT   = [ FDirName / bmw117 sysroot mm_entrynavc2hw-glibc_ivi_base sysroot ] ;&#13;&#10;   &#9;&#9;&#9;HB_CC_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = LINARO_2013_03&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;   C++FLAGS += -fpermissive ;&#13;&#10;}&#13;&#10;else if $(IDE) = YOCTO_ADT&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;   C++FLAGS += -fpermissive ;&#13;&#10;}&#13;&#10;else&#13;&#10;{&#13;&#10;   Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown IDE:&quot; $(IDE) ;&#13;&#10;}&#13;&#10;&#13;&#10;GPU_VENDOR_AND_CHIP = VIVANTE_GC_2000 ;&#13;&#10;" inherited="false"/>
+      <property name="target.custom-products-sub-dir" value="armv7-linux-lnr4.7.3-osp-trc-rel-rtti-vivante" inherited="false"/>
+      <property name="target.enable-debug-info" value="false" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="true" inherited="false"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.gcc-version" value="LNR 4.7.3" inherited="false"/>
+      <property name="target.hardware" value="ARMv7" inherited="false"/>
+      <property name="target.ide-type" value="LINARO" inherited="false"/>
+      <property name="target.ide-version" value="2013.03" inherited="false"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="Opt for speed" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.root-products-dir" value="" inherited="false"/>
+      <property name="target.target-os" value="Linux" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="false"/>
+    </model>
+  </session>
+  <session name="=== native-linux-sessions: ---------------------------------------------------------------------------------------------------">
+  </session>
+  <session name="armv7-orinoco-adt4.9.1-osz-trc-rel-rtti">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="false" inherited="true"/>
+      <property name="build.use-other-targets" value="-sHB_JAM_DEBUG targetbin" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.MiscOptionsModel" version="1.2.0">
+      <property name="misc.job-count" value="1" inherited="true"/>
+      <property name="misc.verbosity-level" value="true" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.PathModel" version="7.2.0">
+      <property name="path.elina-1-sdk-dir" value="./deliveries/orinoco/SDK2/sysroots/cortexa9hf-vfp-neon-elina-linux-gnueabi" inherited="false"/>
+      <property name="path.yocto-adt-dir" value="./deliveries/orinoco/SDK2/sysroots" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-jam-variables" value="HB_JAM_WORKSPACES_USE_NEW_WORKINGDIR_LOGIC = TRUE ; # workaround until a major buildprocess release has been done which contains http://trac.harmanbecker.com:9000/BuildTools/ticket/1067&#13;&#10;&#13;&#10;if $(IDE) in MOMENTICS_6_5_0 MOMENTICS_6_5_0_SP1&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # Use STL&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   if $(GCC_VERSION) != 4_4_2&#13;&#10;   {&#13;&#10;      Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown GCC_VERSION&quot; ;&#13;&#10;   }&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   case X86   : HB_CPU_OPTIONS = -V4.4.2,gcc_ntox86_cpp-ne ;&#13;&#10;   case ARMv7 : HB_CPU_OPTIONS = -V4.4.2,gcc_ntoarmv7le_cpp-ne ;&#13;&#10;   case *     : Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown HARDWARE&quot; ;&#13;&#10;   }&#13;&#10;&#13;&#10;   LINKLIBS             = cpp-ne ;&#13;&#10;   IMPLICIT_C++_DEFINES = _CPP _NO_EX __cplusplus __GNUG__=4 __NO_INLINE__ __DEPRECATED ;&#13;&#10;&#13;&#10;   if $(IDE) = MOMENTICS_6_5_0_SP1&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;   else if $(IDE) = MOMENTICS_6_5_0&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # QNX 6.3.0 dropped some warnings from -w9. As we want to see them, we re-enable them here.&#13;&#10;   # See http://trac.harmanbecker.com:9000/BuildTools/ticket/1019&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   HB_C++_WARNING_FLAGS = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Wno-non-template-friend -Werror ; # -Wshadow&#13;&#10;   HB_CC_WARNING_FLAGS  = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Werror ; # -Wshadow&#13;&#10;}&#13;&#10;else if $(IDE) in VS8 VS9 VS10&#13;&#10;{&#13;&#10;   if $(HB_OPTIMIZE) != NO_OPT&#13;&#10;   {&#13;&#10;      DEBUGFLAG = /Z7 /MTd ; # remove default option /RTC1&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = LINUX_3_1_0&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = TRUE ; # link FW dynamic&#13;&#10;   # if necessary, put LINUX specific adjustments for default settings here&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   &#9;case X86  :   HB_CC_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;case ARM  :   HB_WCC_SYSROOT   = [ FDirName / bmw117 sysroot mm_entrynavc2hw-glibc_ivi_base sysroot ] ;&#13;&#10;   &#9;&#9;&#9;HB_CC_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = YOCTO_ADT&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;   C++FLAGS += -fpermissive ;&#13;&#10;}&#13;&#10;else&#13;&#10;{&#13;&#10;   Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown IDE:&quot; $(IDE) ;&#13;&#10;}" inherited="true"/>
+      <property name="target.custom-products-sub-dir" value="armv7-qnx-m650-4.4.2-osz-trc-rel-rtti-cpp_static_nds_lib" inherited="true"/>
+      <property name="target.enable-debug-info" value="false" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="true" inherited="true"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.gcc-version" value="ADT 4.9.1" inherited="false"/>
+      <property name="target.hardware" value="ARMv7" inherited="false"/>
+      <property name="target.ide-type" value="YOCTO_ADT" inherited="false"/>
+      <property name="target.ide-version" value="(unversioned currently)" inherited="false" experimental="true"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="Opt for size" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Linux" inherited="false"/>
+      <property name="target.toolchain-sdk" value="ORINOCO OSSDK" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="true"/>
+    </model>
+  </session>
+  <session name="armv7-meucy17-adt4.9.1-osz-trc-rel-rtti">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="false"/>
+      <property name="build.build-generate" value="true" inherited="true"/>
+      <property name="build.use-other-targets" value="targetbin" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.MiscOptionsModel" version="1.2.0">
+      <property name="misc.verbosity-level" value="true" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.PathModel" version="7.2.0">
+      <property name="path.elina-1-sdk-dir" value="./deliveries/meucy17/SDK1/sysroots/cortexa9hf-vfp-neon-elina-linux-gnueabi" inherited="false"/>
+      <property name="path.yocto-adt-dir" value="./deliveries/meucy17/SDK1/sysroots" inherited="false"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-jam-variables" value="HB_JAM_WORKSPACES_USE_NEW_WORKINGDIR_LOGIC = TRUE ; # workaround until a major buildprocess release has been done which contains http://trac.harmanbecker.com:9000/BuildTools/ticket/1067&#13;&#10;&#13;&#10;if $(IDE) in MOMENTICS_6_5_0 MOMENTICS_6_5_0_SP1&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # Use STL&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   if $(GCC_VERSION) != 4_4_2&#13;&#10;   {&#13;&#10;      Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown GCC_VERSION&quot; ;&#13;&#10;   }&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   case X86   : HB_CPU_OPTIONS = -V4.4.2,gcc_ntox86_cpp-ne ;&#13;&#10;   case ARMv7 : HB_CPU_OPTIONS = -V4.4.2,gcc_ntoarmv7le_cpp-ne ;&#13;&#10;   case *     : Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown HARDWARE&quot; ;&#13;&#10;   }&#13;&#10;&#13;&#10;   LINKLIBS             = cpp-ne ;&#13;&#10;   IMPLICIT_C++_DEFINES = _CPP _NO_EX __cplusplus __GNUG__=4 __NO_INLINE__ __DEPRECATED ;&#13;&#10;&#13;&#10;   if $(IDE) = MOMENTICS_6_5_0_SP1&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;   else if $(IDE) = MOMENTICS_6_5_0&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # QNX 6.3.0 dropped some warnings from -w9. As we want to see them, we re-enable them here.&#13;&#10;   # See http://trac.harmanbecker.com:9000/BuildTools/ticket/1019&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   HB_C++_WARNING_FLAGS = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Wno-non-template-friend -Werror ; # -Wshadow&#13;&#10;   HB_CC_WARNING_FLAGS  = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Werror ; # -Wshadow&#13;&#10;}&#13;&#10;else if $(IDE) in VS8 VS9 VS10&#13;&#10;{&#13;&#10;   if $(HB_OPTIMIZE) != NO_OPT&#13;&#10;   {&#13;&#10;      DEBUGFLAG = /Z7 /MTd ; # remove default option /RTC1&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = LINUX_3_1_0&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = TRUE ; # link FW dynamic&#13;&#10;   # if necessary, put LINUX specific adjustments for default settings here&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   &#9;case X86  :   HB_CC_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;case ARM  :   HB_WCC_SYSROOT   = [ FDirName / bmw117 sysroot mm_entrynavc2hw-glibc_ivi_base sysroot ] ;&#13;&#10;   &#9;&#9;&#9;HB_CC_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = YOCTO_ADT&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;   C++FLAGS += -fpermissive ;&#13;&#10;}&#13;&#10;else&#13;&#10;{&#13;&#10;   Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown IDE:&quot; $(IDE) ;&#13;&#10;}" inherited="true"/>
+      <property name="target.custom-products-sub-dir" value="armv7-qnx-m650-4.4.2-osz-trc-rel-rtti-cpp_static_nds_lib" inherited="true"/>
+      <property name="target.enable-debug-info" value="false" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="true" inherited="true"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.gcc-version" value="ADT 4.9.1" inherited="false"/>
+      <property name="target.hardware" value="ARMv7" inherited="false"/>
+      <property name="target.ide-type" value="YOCTO_ADT" inherited="false"/>
+      <property name="target.ide-version" value="(unversioned currently)" inherited="false" experimental="true"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="Opt for size" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Linux" inherited="false"/>
+      <property name="target.toolchain-sdk" value="" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="true"/>
+    </model>
+  </session>
+  <session name="armv7-linux-teg4.8.1-nop-trc-rel-rtti">
+    <model class-name="com.harmanbecker.buildcentral.models.BuildModel" version="2.1.0">
+      <property name="build.build-all" value="false" inherited="true"/>
+      <property name="build.build-generate" value="false" inherited="true"/>
+      <property name="build.build-other-targets" value="true" inherited="true"/>
+      <property name="build.use-other-targets" value="targetbin" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.MiscOptionsModel" version="1.2.0">
+      <property name="misc.verbosity-level" value="true" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.PathModel" version="7.2.0">
+      <property name="path.elina-1-sdk-dir" value="./deliveries/SDK_ntg6/sys-linux-tegra-4.8.1-nv/usr/sysroot" inherited="false"/>
+      <property name="path.tegra-dir" value="./deliveries/SDK_ntg6/sys-linux-tegra-4.8.1-nv" inherited="false"/>
+      <property name="path.yocto-adt-dir" value="" inherited="true"/>
+    </model>
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="false"/>
+      <property name="target.custom-jam-variables" value="HB_JAM_WORKSPACES_USE_NEW_WORKINGDIR_LOGIC = TRUE ; # workaround until a major buildprocess release has been done which contains http://trac.harmanbecker.com:9000/BuildTools/ticket/1067&#13;&#10;&#13;&#10;if $(IDE) in MOMENTICS_6_5_0 MOMENTICS_6_5_0_SP1&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # Use STL&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   if $(GCC_VERSION) != 4_4_2&#13;&#10;   {&#13;&#10;      Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown GCC_VERSION&quot; ;&#13;&#10;   }&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   case X86   : HB_CPU_OPTIONS = -V4.4.2,gcc_ntox86_cpp-ne ;&#13;&#10;   case ARMv7 : HB_CPU_OPTIONS = -V4.4.2,gcc_ntoarmv7le_cpp-ne ;&#13;&#10;   case *     : Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown HARDWARE&quot; ;&#13;&#10;   }&#13;&#10;&#13;&#10;   LINKLIBS             = cpp-ne ;&#13;&#10;   IMPLICIT_C++_DEFINES = _CPP _NO_EX __cplusplus __GNUG__=4 __NO_INLINE__ __DEPRECATED ;&#13;&#10;&#13;&#10;   if $(IDE) = MOMENTICS_6_5_0_SP1&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_SP1_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;   else if $(IDE) = MOMENTICS_6_5_0&#13;&#10;   {&#13;&#10;   IMPLICIT_HDRS        = # see http://trac.harmanbecker.com:9000/BuildTools/ticket/1126&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp          ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include cpp c        ]&#13;&#10;      [ FDirName $(MOMENTICS_6_5_0_HOME) target qnx6 usr include              ]&#13;&#10;      ;&#13;&#10;   }&#13;&#10;&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   # QNX 6.3.0 dropped some warnings from -w9. As we want to see them, we re-enable them here.&#13;&#10;   # See http://trac.harmanbecker.com:9000/BuildTools/ticket/1019&#13;&#10;   #--------------------------------------------------------------------------------------------------------------------&#13;&#10;   HB_C++_WARNING_FLAGS = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Wno-non-template-friend -Werror ; # -Wshadow&#13;&#10;   HB_CC_WARNING_FLAGS  = -Wall -w9 -Wpointer-arith -Wcast-qual -Wwrite-strings -Werror ; # -Wshadow&#13;&#10;}&#13;&#10;else if $(IDE) in VS8 VS9 VS10&#13;&#10;{&#13;&#10;   if $(HB_OPTIMIZE) != NO_OPT&#13;&#10;   {&#13;&#10;      DEBUGFLAG = /Z7 /MTd ; # remove default option /RTC1&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = LINUX_3_1_0&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = TRUE ; # link FW dynamic&#13;&#10;   # if necessary, put LINUX specific adjustments for default settings here&#13;&#10;   switch $(HARDWARE)&#13;&#10;   {&#13;&#10;   &#9;case X86  :   HB_CC_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall ;&#13;&#10;   &#9;case ARM  :   HB_WCC_SYSROOT   = [ FDirName / bmw117 sysroot mm_entrynavc2hw-glibc_ivi_base sysroot ] ;&#13;&#10;   &#9;&#9;&#9;HB_CC_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   &#9;&#9;&#9;HB_C++_WARNING_FLAGS = -Wall -Wno-ignored-qualifiers -Wno-psabi ;&#13;&#10;   }&#13;&#10;}&#13;&#10;else if $(IDE) = YOCTO_ADT&#13;&#10;{&#13;&#10;   LINK_FW_DYNAMIC  = FALSE ; # link FW static&#13;&#10;   C++FLAGS += -fpermissive ;&#13;&#10;}&#13;&#10;else&#13;&#10;{&#13;&#10;   Error [ FDirName config project-settings.hbbc ] : -1 : &quot;unknown IDE:&quot; $(IDE) ;&#13;&#10;}" inherited="true"/>
+      <property name="target.custom-products-sub-dir" value="armv7-qnx-m650-4.4.2-osz-trc-rel-rtti-cpp_static_nds_lib" inherited="true"/>
+      <property name="target.enable-debug-info" value="false" inherited="false"/>
+      <property name="target.enable-mapfile-creation" value="true" inherited="true"/>
+      <property name="target.enable-rtti" value="true" inherited="false"/>
+      <property name="target.gcc-version" value="TEG 4.8.1" inherited="false"/>
+      <property name="target.hardware" value="ARMv7" inherited="false"/>
+      <property name="target.ide-type" value="TEGRA" inherited="false"/>
+      <property name="target.ide-version" value="(unversioned currently)" inherited="false" experimental="true"/>
+      <property name="target.linklib-cpp" value="DEFAULT" inherited="false"/>
+      <property name="target.optimizer-type" value="No opt" inherited="false"/>
+      <property name="target.profiling-type" value="none" inherited="false"/>
+      <property name="target.target-os" value="Linux" inherited="false"/>
+      <property name="target.toolchain-sdk" value="LINUX OSSDK (unversioned)" inherited="false"/>
+      <property name="target.trace-type" value="srvr" inherited="false"/>
+      <property name="target.use-custom-products-sub-dir" value="true" inherited="true"/>
+    </model>
+  </session>
+  <session name="-------------------------------------------------------------------------------------------------------------------------------------">
+    <model class-name="com.harmanbecker.buildcentral.models.TargetModel" version="9.14.0">
+      <property name="target.coverage-type" value="none" inherited="true"/>
+      <property name="target.custom-products-sub-dir" value="armv7-qnx-m650-4.4.2-osz-trc-rel-rtti-cpp_static_nds_lib" inherited="true"/>
+      <property name="target.enable-debug-info" value="false" inherited="true"/>
+      <property name="target.enable-mapfile-creation" value="true" inherited="true"/>
+      <property name="target.enable-rtti" value="true" inherited="true"/>
+      <property name="target.gcc-version" value="442" inherited="true"/>
+      <property name="target.hardware" value="ARMv7" inherited="true"/>
+      <property name="target.ide-type" value="MOMENTICS" inherited="true"/>
+      <property name="target.ide-version" value="650sp1" inherited="true"/>
+      <property name="target.linklib-cpp" value="cpp" inherited="true"/>
+      <property name="target.optimizer-type" value="Opt for size" inherited="true"/>
+      <property name="target.profiling-type" value="none" inherited="true"/>
+      <property name="target.trace-type" value="srvr" inherited="true"/>
+      <property name="target.use-custom-products-sub-dir" value="false" inherited="true"/>
+      <property name="target.use-variant" value="false" inherited="true"/>
+      <property name="target.variant-name" value="static_nds_lib" inherited="true"/>
+    </model>
+  </session>
+</build-configuration>

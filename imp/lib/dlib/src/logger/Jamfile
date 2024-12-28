@@ -1,0 +1,26 @@
+# ----------------------------------------------------------------------
+#   Project    : Harman Car Multimedia System
+#   (c) copyright 2009
+#   Harman/becker Automotive Systems GmbH
+#   All rights reserved
+#
+#   File: Jamfile
+#   Author: MFiedler
+#   Date: 28/05/2009
+#
+# ----------------------------------------------------------------------
+
+SubDir IMP_NAV_ENGINE_PF_LIB_DLIB_SRC_LOGGER ;
+
+HBLibrary logger :
+   extra_logger_headers.cpp 
+   logger_config_file.cpp 
+   logger_kernel_1.cpp 
+   ;
+
+HBAdditionalFiles logger :
+   extra_logger_headers.h 
+   logger_config_file.h 
+   logger_kernel_1.h 
+   logger_kernel_abstract.h 
+   ;

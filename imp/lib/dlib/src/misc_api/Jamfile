@@ -1,0 +1,30 @@
+# ----------------------------------------------------------------------
+#   Project    : Harman Car Multimedia System
+#   (c) copyright 2009
+#   Harman/becker Automotive Systems GmbH
+#   All rights reserved
+#
+#   File: Jamfile
+#   Author: MFiedler
+#   Date: 28/05/2009
+#
+# ----------------------------------------------------------------------
+
+
+SubDir IMP_NAV_ENGINE_PF_LIB_DLIB_SRC_MISCAPI ;
+
+HBLibrary misc_api : 
+   misc_api_kernel_1.cpp 
+   misc_api_kernel_2.cpp 
+   ;
+
+HBAdditionalFiles misc_api :
+   misc_api_kernel_1.h 
+   misc_api_kernel_2.h 
+   misc_api_kernel_abstract.h 
+   misc_api_shared.h 
+   posix.h 
+   windows.h 
+   ;
+
+

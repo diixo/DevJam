@@ -1,0 +1,23 @@
+# ----------------------------------------------------------------------
+#   Project    : Harman Car Multimedia System
+#   (c) copyright 2009
+#   Harman/becker Automotive Systems GmbH
+#   All rights reserved
+#
+#   File: Jamfile
+#   Author: MFiedler
+#   Date: 28/05/2009
+#
+# ----------------------------------------------------------------------
+
+
+SubDir IMP_NAV_ENGINE_PF_LIB_DLIB_SRC_UNICODE ;
+
+HBLibrary unicode :
+   unicode.cpp 
+   ;
+
+HBAdditionalFiles unicode :
+   unicode.h 
+   unicode_abstract.h 
+   ;

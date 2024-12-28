@@ -1,0 +1,38 @@
+# ----------------------------------------------------------------------
+#   Project    : Harman Car Multimedia System
+#   (c) copyright 2009
+#   Harman/becker Automotive Systems GmbH
+#   All rights reserved
+#
+#   File: Jamfile
+#   Author: MFiedler
+#   Date: 28/05/2009
+#
+# ----------------------------------------------------------------------
+
+SubDir IMP_NAV_ENGINE_PF_LIB_DLIB_SRC_GUIWIDGETS ;
+
+HBLibrary gui_widgets :
+   base_widgets.cpp 
+   canvas_drawing.cpp 
+   drawable.cpp 
+   fonts.cpp 
+   style.cpp 
+   widgets.cpp 
+   ;
+
+HBAdditionalFiles gui_widgets :
+   base_widgets.h 
+   base_widgets_abstract.h 
+   canvas_drawing.h 
+   canvas_drawing_abstract.h 
+   drawable.h 
+   drawable_abstract.h 
+   fonts.h 
+   fonts_abstract.h 
+   nativefont.h 
+   style.h 
+   style_abstract.h
+   widgets.h
+   widgets_abstract.h
+   ;

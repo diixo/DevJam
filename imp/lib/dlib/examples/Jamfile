@@ -1,0 +1,53 @@
+# ----------------------------------------------------------------------
+#   Project    : Harman Car Multimedia System
+#   (c) copyright 2009
+#   Harman/becker Automotive Systems GmbH
+#   All rights reserved
+#
+#   File: Jamfile
+#   Author: MFiedler
+#   Date: 28/05/2009
+#
+# ----------------------------------------------------------------------
+
+
+SubDir IMP_NAV_ENGINE_PF_LIB_DLIB_EXAMPLES ;
+
+HBMain face_landmark_detection :
+   face_landmark_detection_ex.cpp 
+   ;
+
+HBLinkLibraries face_landmark_detection : 
+   image_processing 
+   image_transforms 
+   dlib 
+   image_loader 
+   base64 
+   gui_widgets 
+   tokenizer 
+   ttimer 
+
+   entropy_decoder 
+   entropy_encoder 
+   gui_core 
+   threads 
+   logger 
+   unicode 
+   dir_nav 
+   misc_api 
+;
+
+Bulk [ FDirName [ HBExeTarget ] ]      # destination
+     [ FDirName [ HBDspTarget ] ]      # destination
+     : 
+     [ FDirName $(IMP_NAV_ENGINE_PF_LIB_DLIB) examples landmarks.dat ]  # source
+       face_landmark_detection			# myexe depends on destination
+   ;
+ 
+Bulk [ FDirName [ HBExeTarget ] ]		# destination
+     [ FDirName [ HBDspTarget ] ]		# destination
+     : 
+     [ FDirName $(IMP_NAV_ENGINE_PF_LIB_DLIB) examples Face.bmp ]       # source
+       face_landmark_detection			# myexe depends on destination
+   ;
+ 

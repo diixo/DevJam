@@ -1,0 +1,31 @@
+# ----------------------------------------------------------------------
+#   Project    : Harman Car Multimedia System
+#   (c) copyright 2009
+#   Harman/becker Automotive Systems GmbH
+#   All rights reserved
+#
+#   File: Jamfile
+#   Author: MFiedler
+#   Date: 28/05/2009
+#
+# ----------------------------------------------------------------------
+
+
+SubDir IMP_NAV_ENGINE_PF_LIB_DLIB_SRC_IMGLOADER ;
+
+HBLibrary image_loader :
+   png_loader.cpp  
+   jpeg_loader.cpp  
+   ;
+
+HBAdditionalFiles image_loader :
+   image_loader.h 
+   image_loader_abstract.h 
+   jpeg_loader.h 
+   jpeg_loader_abstract.h 
+   load_image.h 
+   load_image_abstract.h 
+   png_loader.h 
+   png_loader_abstract.h 
+   ;
+

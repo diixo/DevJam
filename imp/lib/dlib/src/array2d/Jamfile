@@ -1,0 +1,21 @@
+# ----------------------------------------------------------------------
+#   Project    : Harman Car Multimedia System
+#   (c) copyright 2009
+#   Harman/becker Automotive Systems GmbH
+#   All rights reserved
+#
+#   File: Jamfile
+#   Author: MFiedler
+#   Date: 28/05/2009
+#
+# ----------------------------------------------------------------------
+
+
+SubDir IMP_NAV_ENGINE_PF_LIB_DLIB_SRC array2d ;
+
+HBAdditionalFiles dlib :
+   array2d_generic_image.h 
+   array2d_kernel.h 
+   array2d_kernel_abstract.h 
+   serialize_pixel_overloads.h 
+   ;

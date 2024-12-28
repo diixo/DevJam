@@ -1,0 +1,102 @@
+= {docname}
+Akex Dev
+:email: dev@gmail.com
+:version: 0.1
+:date: 2013-11-25
+// Set the delivery state: Draft or Release
+:deliverystate: Draft 
+
+:cpp: {basebackend@docbook:c++:cpp}
+
+[options="header",cols="<12%,^15%,<20%,<53%"]
+|====
+| Revision | Date       | Author      | Description
+| 0.1      | 2014-03-06 | AAlex       | First release
+|====
+
+
+== Introduction
+This document describes the math library used in MapViewer.
+
+
+=== Purpose
+
+* linear algebra data structures and operations
+* calculating intersections between various types of bounding volumes
+* interpolation of motion
+* splines
+* geodesy mathematics:  coordinate space conversion  (cartesian, spherical and WGS/NDS)
+
+
+
+
+== Context View
+
+=== Usage of internal Components
+
+==== Linear algebra
+* _TVector<T,N>_:  a template vector class which is parameterized by type of scalar and number of components. Commonly used typedefs are Vector3f which is 3 component float vector, Vector2i which is 2 component integer vector.
+* _TMatrix3x3<T>_,  _TMatrix4x4<T>_: matrices
+* _TQuat<T>_: quaternion
+
+==== Bounding volumes
+* _TBoundingBox_: oriented bounding box in cartesian space
+* _TAABoundingBox_: axis aligned bounding box in cartesian space
+* _SGeoBoundingBox_: a pair of two (longitude; latitude; altitude)  points which  delimit minimums and maximums of a bounding box in NDS space
+* _TBoundingRect_: generic bounding rectangle
+* _TBoundingSphere_: generic bounding sphere
+* _TCircle_: generic bounding circle
+* _TFrustum_: frustum of the camera
+
+==== Interpolation of motion
+* _CUniformlyAcceleratedMotion_
+
+==== Splines
+* _CAkimaSpline_:  Akima spline implementation
+
+
+==== Geodesy mathematics
+* _GeoMath.hpp_:  conversion radians <-> degrees, cartesian <-> NDS, cartesian <-> WGS
+
+==== Misc 3D math
+* _Project.hpp_: conversion from OpenGL's screen space to world space and back.
+
+
+
+=== Usage of external Components
+
+None except C runtime library.
+
+
+== Operation Concept
+
+=== Used Algorithms
+
+Bounding volume intersection algorithms, one for each unique pair of bounding volume types.
+
+=== Testability
+
+Very high. All components and algorithms have unit tests.
+
+==== Unit Tests
+
+'//CoC_Navigation/Platform/Nav2010/P004/Development/Default/imp/nav/engine/pf/map/math/test/...' +
+
+
+=== Further Development
+
+==== Do
+* SSE in matrix multiplication
+* use 3rd party library such as glm for linear algebra
+
+==== Don't
+* Shove unnecessary things to Math.hpp because it is universally included.
+
+
+=== Perforce Information
+
+'//CoC_Navigation/Platform/Nav2010/P004/Development/Default/imp/nav/engine/pf/map/math/...' +
+
+=== Useful Jam Targets
+targetbin
+

@@ -1,0 +1,26 @@
+# ----------------------------------------------------------------------
+#   Project    : Harman Car Multimedia System
+#   (c) copyright 2009
+#   Harman/becker Automotive Systems GmbH
+#   All rights reserved
+#
+#   File: Jamfile
+#   Author: MFiedler
+#   Date: 28/05/2009
+#
+# ----------------------------------------------------------------------
+
+
+SubDir IMP_NAV_ENGINE_PF_LIB_DLIB_SRC entropy_encoder_model ;
+
+HBAdditionalFiles dlib :
+   entropy_encoder_model_kernel_1.h 
+   entropy_encoder_model_kernel_2.h 
+   entropy_encoder_model_kernel_3.h 
+   entropy_encoder_model_kernel_4.h 
+   entropy_encoder_model_kernel_5.h 
+   entropy_encoder_model_kernel_6.h 
+   entropy_encoder_model_kernel_abstract.h 
+   entropy_encoder_model_kernel_c.h 
+   ;
+
